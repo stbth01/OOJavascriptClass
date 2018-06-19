@@ -1,30 +1,30 @@
 function stopWatch() {
-    let diff=0;
-    let duration=0;
-    let started = 0;
+    this.diff = 0;
+    this.duration = 0;
+    this.started = 0;
 
-    this.start = () => {
-        if( started !== 0 )
-            throw new Error('Stopwatch already started!')
-        diff = Date.now();
-        started = 1;
+    // Object.defineProperty(this, 'duration', {
+    //     get: () => {return this.duration;}
+    // })
+}
 
-    }
+stopWatch.prototype.start = function() {
+    if( this.started !== 0 )
+        throw new Error('Stopwatch already started!')
+    this.diff = Date.now();
+    this.started = 1;
+}
 
-    this.stop = () => {
-        if( started !== 1 )
-            throw new Error('Stopwatch not started!')
-        duration += (Date.now() - diff)/1000;
-        started = 0;
-    }
-
-    this.reset = () => {
-        diff , started, duration = 0;
-    }
-
-    Object.defineProperty(this, 'duration', {
-        get: () => {return duration;}
-    })
+stopWatch.prototype.stop = function() {
+    if( this.started !== 1 )
+        throw new Error('Stopwatch not started!')
+    this.duration += (Date.now() - this.diff)/1000;
+    this.started = 0;
+}
+stopWatch.prototype.reset = function() {
+    this.diff=0;
+    this.started=0;
+    this.duration = 0;
 }
 
 
